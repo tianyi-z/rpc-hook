@@ -1,0 +1,16 @@
+{
+    "name": "yuanxin/rpc-hook",
+    "description": "rpc钩子",
+    "autoload": {
+        "psr-4": {
+            "Yuanxin\\RpcHook\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "zhangtianyi",
+            "email": "zhangtianyi@yuanxinjituan.com"
+        }
+    ],
+    "require": {}
+}
