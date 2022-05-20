@@ -1,5 +1,6 @@
 <?php
 
+namespace YuanxinHealthy\RpcHook;
 /**
  *服务终止前首先从nacos上下服务.
  */
@@ -122,6 +123,4 @@ class CancelRpcServerFromNacos
         return $res;
     }
 }
-
-(new CancelRpcServerFromNacos())->updateServer();
 
