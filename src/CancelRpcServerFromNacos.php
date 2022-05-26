@@ -101,6 +101,8 @@ class CancelRpcServerFromNacos
             'ip' => $this->serverIp,
             'port' => $this->serverPort,
             'date' => date("Y-m-d H:i:s"),
+            'namespaceId' => $this->namespaceId,
+            'groupName' => $this->groupName,
         ], JSON_UNESCAPED_UNICODE));
     }
 
