@@ -39,7 +39,7 @@ class CancelRpcServerFromNacos
     public function __construct()
     {
         $this->serverIp = getenv('POD_IP');
-        $this->namespaceId = getenv('NACOS_MANAGEMENT_NAMESPACE_ID');
+        $this->namespaceId = getenv('APP_NAME');
         $this->groupName = getenv('NACOS_MANAGEMENT_GROUP_NAME');
         $nacosHost = getenv('NACOS_HOST');
         $nacosPort = getenv('NACOS_PORT');
