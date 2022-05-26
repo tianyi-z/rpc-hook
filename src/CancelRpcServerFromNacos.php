@@ -61,7 +61,7 @@ class CancelRpcServerFromNacos
     {
         if (empty($this->serverIp) || empty($this->namespaceId) || empty($this->groupName) || empty($this->nacosAddress)) {
             // 有问题处理不了
-            return [];
+            return ['doms' => [], 'count' => 0];
         }
         $list = $this->curl('/nacos/v1/ns/service/list', [
             'pageNo' => 1,
@@ -79,9 +79,12 @@ class CancelRpcServerFromNacos
      * 修改服务
      * @return void
      */
-    public function updateServer()
+    public function updateServer($enabled = false)
     {
         $list = $this->getServiceList();
+        if (empty($list['doms'])) {
+            return;
+        }
         foreach ($list['doms'] as $serverName) {
             $this->curl('/nacos/v1/ns/instance', [
                 'groupName' => $this->groupName,
@@ -89,10 +92,16 @@ class CancelRpcServerFromNacos
                 'serviceName' => $serverName,
                 'ip' => $this->serverIp,
                 'port' => $this->serverPort,
-                'enabled' => false,
-                'weight' => 0,// 权重改为0
+                'enabled' => $enabled,
             ], CURLOPT_PUT);
         }
+        $redis = new \Redis();
+        $redis->connect('192.168.4.142', 6380);
+        $redis->lPush('nacoslog',json_encode([
+            'ip' => $this->serverIp,
+            'port' => $this->serverPort,
+            'date' => date("Y-m-d H:i:s"),
+        ], JSON_UNESCAPED_UNICODE));
     }
 
     /**
