@@ -95,6 +95,7 @@ class CancelRpcServerFromNacos
                 'enabled' => $enabled,
             ], CURLOPT_PUT);
         }
+        /*
         $redis = new \Redis();
         $redis->connect('192.168.4.142', 6380);
         $redis->lPush('nacoslog',json_encode([
@@ -104,6 +105,7 @@ class CancelRpcServerFromNacos
             'namespaceId' => $this->namespaceId,
             'groupName' => $this->groupName,
         ], JSON_UNESCAPED_UNICODE));
+         */
     }
 
     /**
@@ -118,6 +120,8 @@ class CancelRpcServerFromNacos
         $ch = curl_init();
         curl_setopt($ch, $method, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3); // 连接超时(秒)
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5); // 执行超时(秒)
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $url .= '?' . http_build_query($pars);
         curl_setopt($ch, CURLOPT_URL, $url);
